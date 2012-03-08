@@ -323,7 +323,7 @@
         // attributes for styling the backing
         stateAttr = {};
         if(this.options.stateSpecificLabelBackingStyles[state]) {
-          $.extend(stateAttr, backingAttr, this.options.stateSpecificBackingLabelStyles[state]);
+          $.extend(stateAttr, backingAttr, this.options.stateSpecificLabelBackingStyles[state]);
         } else {
           stateAttr = backingAttr;
         }
