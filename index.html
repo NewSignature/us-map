@@ -1,0 +1,519 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>U.S. Map - It&rsquo;s a jQuery plugin - Flash not needed</title>
+  <meta name="description" content="">
+
+  <!-- Mobile viewport optimized: h5bp.com/viewport -->
+  <meta name="viewport" content="width=device-width">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="css/libs/prettify.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+  <!-- All JavaScript at the bottom, except this Modernizr build.
+       Modernizr enables HTML5 elements & feature detects for optimal performance.
+       Create your own custom Modernizr build: www.modernizr.com/download/ -->
+  <script src="js/libs/modernizr-2.5.3.min.js"></script>
+</head>
+<body>
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <nav  id="nav" class="primary-nav navbar navbar-fixed-top">
+    <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a href="http://www.newsignature.com" class="branding newsig"><em>from</em> <strong>New Signature</strong></a>
+      <div class="nav-collapse">
+        <ul class="nav" role="navigation">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li class="dropdown" id="usage-menu">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Usage <b class="caret"></b></a> 
+            <ul class="dropdown-menu">
+              <li><a href="#usage">Basic</a></li>
+              <li><a href="#usage-style-options">Style Options</a></li>
+              <li><a href="#usage-events">Events</a></li>
+              <li><a href="#usage-methods">Methods</a></li>
+            </ul>
+          </li>
+          <li><a href="#download">Download</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </nav>
+  
+  <header id="overview" class="overview">
+    <div class="container-fluid">
+      <div class="row-fluid clearfix">
+        <div class="span6">
+          <div class="hero-unit">
+            <h1>U.S. Map</h1>
+            <p>JQuery plugin, so no Flash needed</p>
+            <p class="download-info">
+              <a href="https://github.com/NewSignature/us-map/tags" class="btn btn-large btn-primary with-icon with-icon-download">Download</a>
+              <a href="https://github.com/NewSignature/us-map" class="btn btn-large btn-inverse with-icon with-icon-github">View on Github</a>
+            </p>
+          </div>
+          
+          
+        </div>
+        <div class="span6 intro">
+          <p>Easily add a an interactive map of the USA and States to your webpage without using Flash.</p>
+          <ul class="features">
+            <li class="svg">Resizable because it is SVG/VML based thanks to the Raphaël library</li>
+            <li class="paint">Customize the styling of the states and labels</li>
+            <li class="heat-map">Target styling to certain states to create custom heat-maps</li>
+            <li class="jquery">Use jQuery events to bind your own actions as users interact</li>
+          </ul>
+        </div>
+      </div>
+      </div>
+    </div>
+  </header>
+  
+  
+  <div role="main" class="container-fluid multiarticles">
+    <article id="demo">
+      <header class="page-header"><h1>Demo <small>Click on the state to see the result</small></h1></header>
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="example">
+              <div class="results">
+                <h5>Results</h5>
+                <div id="clicked-state">Click on a state</div></div>
+              <div class="map" id="map"></div>
+            </div>
+          </div>
+          <div class="span6">
+            <h2>HTML</h2>
+            <pre class="prettyprint lang-html">&ltdiv id="map" style="width: 350px; height: 250px;">&lt;/div>
+&lt;div id="clicked-state">&lt;/div></pre>
+            
+            <h2>Javascript</h2>
+            <pre class="prettyprint lang-js">$('#map').usmap({
+  // The click action
+  click: function(event, data) {
+    $('#clicked-state')
+      .text('You clicked: '+data.name)
+      .parent().effect('highlight', {color: '#C7F464'}, 2000);
+  }
+});</pre>
+          </div>
+        </div>
+        
+          
+      
+            
+    </article>
+    <article id="usage">
+      <header class="page-header page-header-with-nav">
+        <h1>Usage</h1>
+        <nav><ul class="nav nav-pills">
+          <li class="active"><a href="#usage">Basic</a></li>
+          <li><a href="#usage-style-options">Style Options</a></li>
+          <li><a href="#usage-events">Events</a></li>
+          <li><a href="#usage-methods">Methods</a></li>
+        </ul></nav>
+      </header>
+      
+      <section>
+        <p>Before including the U.S. Map script, include both the <a href="http://jquery.com/">jQuery</a> and <a href="http://raphaeljs.com/">Raphaël</a> libraries.</p>
+        
+        <pre class="prettyprint lang-html">&lt;script src="js/jquery.js">&lt;/script>
+  &lt;script src="js/raphael.js">&lt;/script>
+  &lt;script src="js/jquery.usmap.js">&lt;/script></pre>
+        
+        <p>Then create an element to hold the map somewhere on your page with a set width and height:</p>
+        
+        <pre class="prettyprint lang-html">&lt;div id="map" style="width: 300px; height: 300px;">&lt;/div></pre>
+        
+        <p>And then write the script to turn the element into a map:</p>
+        
+        <pre class="prettyprint lang-js">$(document).ready(function() {
+    $('#map').usmap({});
+  });</pre>
+      </section>
+      <section>
+        <h2 id="usage-style-options">Style options</h2>
+        
+        <div class="row-fluid">
+          <div class="span6">
+            <p>Customize the appearance of the states by default or on hover.  Override individual state settings to create heat maps and other features.</p> 
+          
+            <h3>stateStyles <small>style object</small></h3>
+            <p>The default styles for the state shapes.</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({
+  stateStyles: {fill: 'blue'}
+});</pre>
+            
+            <h3>stateHoverStyles <small>style object</small></h3>
+            <p>The default hover styles for the state shapes.</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({
+  stateHoverStyles: {fill: 'red'}
+});</pre>
+            
+            <h3>stateHoverAnimation <small>milliseconds</small></h3>
+            <p>The time in milliseconds for the animation between styles when hovering over a state shape.</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({stateHoverAnimation: 300});</pre>
+            
+            <h3>stateSpecificStyles <small>{&lt;state&gt;: &lt;style object&gt;}</small></h3>
+            <p>An object to override the default styles for individual states.
+              The object keys are the state abbrivation with the value being the style object.</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({
+  stateSpecificStyles: {
+    'MD': {fill: 'yellow'},
+    'VA': {fill: 'teal'}
+  } 
+});</pre>
+            
+            <h3>stateSpecificHoverStyles <small>{&lt;state&gt;: &lt;style object&gt;}</small></h3>
+            <p>An object to override the default hover styles for individual states.
+              The object keys are the state abbrivation with the value being the style object.</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({
+  stateSpecificHoverStyles: {
+    'MD': {fill: 'purple'},
+    'VA': {fill: 'orange'}
+  } 
+});</pre>
+            
+            <h3>showLabels <small>boolean</small></h3>
+            <p>Turn on or off the display of the labels.</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({showLabels: true});</pre>
+            
+            <h3>labelWidth <small>pixels</small></h3>
+            <p>The width of the labels.</p>
+            
+            <h3>labelHeight <small>pixels</small></h3>
+            <p>The height of the labels.</p>
+            
+            <h3>labelGap <small>pixels</small></h3>
+            <p>The distance between labels.</p>
+            
+            <h3>labelRadius <small>pixels</small></h3>
+            <p>The radius of the rounded corners of the labels.</p>
+            
+            <h3>labelBackingStyles <small>style object</small></h3>
+            <p>The default styles for the label shapes.</p>
+            
+            <h3>labelBackingHoverStyles <small>style object</small></h3>
+            <p>The default hover styles for the label shapes.</p>
+            
+            <h3>stateSpecificLabelBackingStyles</h3>
+            <p>An object to override the default styles for individual label.
+              The object keys are the state abbreviation with the value being the style object.</p>
+            
+            <h3>stateSpecificLabelBackingHoverStyles</h3>
+            <p>An object to override the default hover styles for an individual label.
+              The object keys are the state abbreviation with the value being the style object.</p>
+            
+            <h3>labelTextStyles</h3>
+            <p>The styling for the label text.</p>
+                        
+            <h3>stateSpecificLabelTextStyles</h3>
+            <p>An object to override the default styles for an individual label text.
+              The object keys are the state abbreviation with the value being the style object.</p>
+            
+            <h3>stateSpecificLabelTextHoverStyles</h3>
+            <p>An object to override the default hover styles for an individual label text.
+              The object keys are the state abbreviation with the value being the style object.</p>
+          </div>
+          <div class="span5 offset1">
+            <div class="data-def">
+              <h4>SVG style attributes</h4>
+              
+              <dl>
+                <dt>fill <small>color</small></dt>
+                <dd>The fill color of the shape or text.
+                  <pre class="prettyprint lang-js">{'fill': '#335577'}</pre>  
+                </dd>
+                
+                <dt>stroke <small>color</small></dt>
+                <dd>The stroke color of the shape or text.
+                  <pre class="prettyprint lang-js">{'stroke': '#000'}</pre>  
+                </dd>
+                
+                <dt>stroke-width <small>width</small></dt>
+                <dd>The width of the stroke.
+                  <pre class="prettyprint lang-js">{'stroke-width': 2}</pre>  
+                </dd>
+                
+                <dt>stroke-linejoin <small>miter | round | bevel | inherit</small></dt>
+                <dd>The shape to be used at the corners of stroked paths or basic shapes.
+                  <pre class="prettyprint lang-js">{'stroke-linejoin': 'round'}</pre>
+                </dd>
+                
+                <dt>font-weight <small>weight</small></dt>
+                <dd>The font-weight of the text element.
+                  <pre class="prettyprint lang-js">{'font-weight': 300}</pre>  
+                </dd>
+                
+                <dt>font-size <small>positive length</small></dt>
+                <dd>The size of the text.
+                  <pre class="prettyprint lang-js">{'font-size': '10px'}</pre>
+                </dd>
+              </dl>
+            </div>    
+          </div>
+        </div>
+      </section>
+      <section id="usage-events">
+        <h2>Events</h2>
+        
+        <div class="row-fluid">
+          <div class="span6">
+            <p>Use events to connect the U.S. Map with your custom code. 
+              With events, you can allow a function to react to user interactions.</p>
+            
+            <p>All events have a similar pattern in their arguments and ability to either target individual or all states.</p>
+            
+            <p>The event handler is passed two arguments: the jQuery event object and a date object for the state.</p>
+            
+            <p>As an option:</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({
+  <em>&lt;event&gt;</em>: function(event, data) {
+    // Output the abbreviation of the state name to the console
+    console.log(data.name);
+  }
+});</pre>
+          
+            <p>Binding it:</p>
+            <pre class="prettyprint lang-js">$('#map').on('usmap<em>&lt;event&gt;</em>', function(event, data) {
+  // Output the abbreviation of the state name to the console
+  console.log(data.name);
+});</pre> 
+            <p>Instead of binding to all states, you can bind to a specific state as well.
+               You can pass an object as the <code><em>&lt;event&gt;</em>State</code> option
+               where the key is the state abbreviation.
+               Or instead, you can use the jQuery event API to bind to the
+               <code>usmap<em>&lt;event&gt;&lt;state abbreviation&gt;</em></code> </p>
+            <p>As an option:</p>
+            <pre class="prettyprint lang-js">$('#map').usmap({
+  <em>&lt;event&gt;</em>State: {
+    'MD' : function(event, data) {
+      console.log('You interacted with the state of Maryland');
+    }
+  }
+});</pre>
+          
+            <p>Binding it:</p>
+            <pre class="prettyprint lang-js">$('#map').on('usmap<em>&lt;event&gt;</em>MD', function(event, data) {
+  console.log('You clicked on the state of Maryland');
+});</pre>
+          
+          <p>The order of which the events are triggered are:</p>
+          <ol>
+            <li>The state specific handler set in the options</li>
+            <li>State specific handlers set through the jQuery event API</li>
+            <li>The general state handler set in the options</li>
+            <li>The general handlers set through the jQuery event API</li>
+          </ol>
+          </div>
+          <div class="span5 offset1">
+            <div class="data-def">
+              <h4>The data object</h4>
+              <dl>
+                <dt>name <small class="type">string</small></dt>
+                <dd>The two letter abbreviation of the state.</dd>
+                
+                <dt>shape <small class="type">Element</small></dt>
+                <dd>The shape element (SVG or VML) for the state.</dd>
+                
+                <dt>hitArea <small class="type">Element</small></dt>
+                <dd>The shape element (SVG or VML) for the transparent hit area.</dd>
+                
+                <dt>labelBacking <small class="type">Element</small></dt>
+                <dd>The shape element (SVG or VML) for the backing of the label if there is one for the state.</dd>
+                
+                <dt>labelText <small class="type">Element</small></dt>
+                <dd>The vector text element (SVG or VML) for the label text if there is one for the state.</dd>
+                
+                <dt>labelHitArea <small class="type">Element</small></dt>
+                <dd>The shape element (SVG or VML) for the transparent hit area for the label if there is one for the state.</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        
+        <h3>click <small>function(event, data)</small></h3>
+        <p>When the user clicks on a state. See the <a href="#usage-events">above</a> information for how to
+          attach an event handler to the general and state specific click event.</p>
+        
+        <h3>mouseover <small>function(event, data)</small></h3>
+         <p>When the user moves their mouse over a state. See the <a href="#usage-events">above</a> information for how to
+          attach an event handler to the general and state specific click event.</p>
+        
+       <h3>mouseout <small>function(event, data)</small></h3>
+       <p>When the user moves their mouse out of a state. See the <a href="#usage-events">above</a> information for how to
+          attach an event handler to the general and state specific click event.</p>
+      </section>
+      
+      <section id="usage-methods">
+        <h2>Methods</h2>
+        
+        <h3>trigger <small>.usmap('trigger', state, eventType, event)</small></h3>
+        <p>Manually trigger off an event and the resulting event handlers.</p>
+        
+        <div class="data-def">
+          <h4>Parameters</h4>
+          <dl>
+            <dt>state <small class="type">string</small></dt>
+            <dd>The two letter abbreviation of the state.</dd>
+            
+            <dt>eventType <small class="type">string</small></dt>
+            <dd>The type of event to trigger</dd>
+            
+            <dt>event <small class="type">Event (optional)</small></dt>
+            <dd>The original triggering event.</dd>
+          </dl>
+        </div>
+        
+      </section>
+    </article>
+    
+    <article id="download">
+      <header class="page-header"><h1>Download</h1></header>
+      <p>You can <a href="https://github.com/NewSignature/us-map/tags">download</a> U.S. Map from <a href="https://github.com/NewSignature/us-map">Github</a> as well as view the source or even fork it.</p>
+      <p class="download-info">
+        <a href="https://github.com/NewSignature/us-map/tags" class="btn btn-large btn-primary with-icon with-icon-download">Download</a>
+        <a href="https://github.com/NewSignature/us-map" class="btn btn-large btn-inverse with-icon with-icon-github">View on Github</a>
+      </p>
+    </article>
+    
+    <article id="about">
+      <header class="page-header"><h1>About</h1></header>
+      <div class="row-fluid">
+        <div class="span4">
+          <p>The U.S. Map plugin was developed by <a href="http://twitter.com/seamusleahy">Seamus Leahy</a> and the other folks at <a href="http://www.newsignature.com/">New Signature</a>.</p>
+        
+        </div>
+        <div class="span3 offset1">
+                    <p>Check out our other <a href="http://github.com/NewSignature">free projects</a>, or our <a href="http://www.newsignature.com/clients-and-work/">award winning interactive and design work</a>.  You can find additional information <a href="http://www.newsignature.com/blog/category/creative/">in our blog</a>.</p>
+
+        </div>
+        <div class="span2 offset1">
+          <a href="https://twitter.com/NewSignature" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @NewSignature</a>
+          <script>
+          setTimeout(
+            function() {
+              !function(d,s,id){
+                var js,fjs=d.getElementsByTagName(s)[0];
+                if(!d.getElementById(id)){
+                  js=d.createElement(s);js.id=id;
+                  js.src="https://platform.twitter.com/widgets.js";
+                  fjs.parentNode.insertBefore(js,fjs);
+                }
+              }(document,"script","twitter-wjs");
+            }, 20);</script>
+        </div>
+      </div>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="container-fluid">
+    <p>&copy; 2012 New Signature</p>
+  </div></footer>
+
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+  <!-- scripts concatenated and minified via build script -->
+  <script src="js/libs/bootstrap.js"></script>
+  <script src="js/libs/prettify.js"></script>
+  <script src="js/libs/raphael.js"></script>
+  <script src="js/libs/jquery.usmap.js"></script>
+  <script src="js/libs/jquery-ui-highlight.js"></script>
+  <script>
+    $('body').scrollspy({offset: $('#nav').outerHeight()+10, target: '#nav'})
+    $('body')
+      .on('click', 'a', function(event) {
+        var link = $(event.target);
+        var toElement = $(link.attr('href'));
+        if(toElement.length) {
+          var top = toElement.offset().top - $('#nav').outerHeight();
+          $('html, body').animate({scrollTop: top}, 1000);
+        }
+      });
+      
+    
+    prettyPrint();
+    
+    $('#map').usmap({
+      'stateStyles': {
+        fill: "#4ECDC4",
+        stroke: "#41A59B",
+        "stroke-width": 1,
+        "stroke-linejoin": "round",
+        scale: [1, 1]
+      },
+      'stateHoverStyles': {
+        fill: "#C7F464",
+        stroke: "#ADCC56",
+        scale: [1.1, 1.1]
+      },
+      'labelBackingStyles': {
+        fill: "#4ECDC4",
+        stroke: "#41A59B",
+        "stroke-width": 1,
+        "stroke-linejoin": "round",
+        scale: [1, 1]
+      },
+      
+      // The styles for the hover
+      'labelBackingHoverStyles': {
+        fill: "#C7F464",
+        stroke: "#ADCC56",
+      },
+      'labelTextStyles': {
+      fill: "#222",
+        'stroke': 'none',
+        'font-weight': 300,
+        'stroke-width': 0,
+        'font-size': '10px'
+      },
+      click: function(event, data) {
+        $('#clicked-state').text('You clicked: '+data.name).parent().effect('highlight', {color: '#C7F464'}, 2000);
+      }
+    });
+  </script>
+  
+  <!-- end scripts -->
+
+  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet -->
+  <!-- <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script> -->
+</body>
+</html>
