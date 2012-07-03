@@ -171,6 +171,7 @@
       // Keep track of all the states
       this.stateHitAreas = {}; // transparent for the hit area
       this.stateShapes = {}; // for the visual shape
+      this.bboxesForStateShapes = {}; // bounding boxes for the shapes scaled to the map
       this.topShape = null;
       
       // create all the states
@@ -279,6 +280,18 @@
         $(this.stateHitAreas[state].node).bind('click', this._onClickProxy);
         $(this.stateHitAreas[state].node).bind('mouseover', this._onMouseOverProxy);
         
+      }
+      
+      
+      // Create the bounding boxes for the shapes
+      for(var state in this.stateShapes) {
+        var bbox = this.stateShapes[state].getBBox();
+        for(var v in bbox) {
+          if( $.isNumeric(bbox[v]) ) {
+            bbox[v] = bbox[v] * this.scale;
+          }
+        }
+        this.bboxesForStateShapes[state] = bbox;
       }
     },
     
@@ -389,6 +402,7 @@
       var labelBacking = this.labelShapes[stateName];
       var labelText = this.labelTexts[stateName];
       var labelHitArea = this.labelHitAreas[stateName]
+      var bbox = this.bboxesForStateShapes[stateName];
       
       return {
         shape: stateShape, 
@@ -396,7 +410,8 @@
         name: stateName, 
         labelBacking: labelBacking, 
         labelText: labelText, 
-        labelHitArea: labelHitArea
+        labelHitArea: labelHitArea,
+        bbox: bbox
       };
     },
     
