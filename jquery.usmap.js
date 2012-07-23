@@ -399,9 +399,9 @@
     _getState: function(stateName) {
       var stateShape = this.stateShapes[stateName];
       var stateHitArea = this.stateHitAreas[stateName];
-      var labelBacking = this.labelShapes[stateName];
-      var labelText = this.labelTexts[stateName];
-      var labelHitArea = this.labelHitAreas[stateName]
+      var labelBacking = stateName in this.labelShapes ? this.labelShapes[stateName] : null;
+      var labelText = stateName in this.labelTexts ? this.labelTexts[stateName] : null;
+      var labelHitArea = stateName in this.labelHitAreas ? this.labelHitAreas[stateName] : null
       var bbox = this.bboxesForStateShapes[stateName];
       
       return {
@@ -618,12 +618,36 @@
         shape.insertAfter(this.topShape);
       }
       this.topShape = shape;
-    }
+    },
+    
+    /**
+     * Get all the shapes used for each state for do custom bindings
+     */
+    getStateShapes: function() {
+      if(this._getStateShapes) {
+        return this._getStateShapes;
+      }
+      
+      this._getStateShapes = {};
+      
+      for(var stateName in this.stateShapes) {
+        this._getStateShapes[stateName] = {
+          shape: this.stateShapes[stateName],
+          hitArea: this.stateHitAreas[stateName],
+          labelBacking: stateName in this.labelShapes ? this.labelShapes[stateName] : null,
+          labelText: stateName in this.labelTexts ? this.labelTexts[stateName] : null,
+          labelHitArea: stateName in this.labelHitAreas ? this.labelHitAreas[stateName] : null,
+          name: stateName, 
+        };
+      }
+      
+      return this._getStateShapes;
+    },
   };
   
   
   // Getters
-  var getters = [];
+  var getters = ['getStateShapes'];
   
   
   // Create the plugin
