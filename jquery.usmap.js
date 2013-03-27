@@ -357,7 +357,73 @@
         this.labelHitAreas[state].node.dataState = state;
       }
       
-      
+      var otherStates = {
+      	HI: {x:295, y:560}, 
+    		AK: {x:120, y:495},
+    		CA: {x:70, y:280},
+    		NV: {x:130, y:235},
+    		OR: {x:90, y:125},
+    		WA: {x:115, y:50},
+    		ID: {x:185, y:145},
+    		MT: {x:270, y:85},
+    		WY: {x:295, y:185},
+    		UT: {x:215, y:255},
+    		AZ: {x:195, y:365},
+    		CO: {x:310, y:270},
+    		NM: {x:295, y:370},
+    		TX: {x:420, y:455},
+    		OK: {x:455, y:360},
+    		KS: {x:440, y:290},
+    		NE: {x:420, y:225},
+    		SD: {x:410, y:160},
+    		ND: {x:415, y:95},
+    		MN: {x:500, y:125},
+    		IA: {x:520, y:215},
+    		WI: {x:578, y:160},
+    		IL: {x:593, y:255},
+    		MO: {x:540, y:294},
+    		AR: {x:540, y:375},
+    		LA: {x:544, y:455},
+    		MS: {x:596, y:420},
+    		AL: {x:648, y:410},
+    		TN: {x:645, y:346},
+    		KY: {x:680, y:304},
+    		IN: {x:645, y:250},
+    		MI: {x:665, y:185},
+    		OH: {x:696, y:240},
+    		PA: {x:775, y:215},
+    		NY: {x:810, y:160},
+    		ME: {x:895, y:85},
+    		WV: {x:735, y:278},
+    		VA: {x:785, y:285},
+    		NC: {x:778, y:334},
+    		SC: {x:758, y:376},
+    		GA: {x:710, y:410},
+    		FL: {x:763, y:508},
+      };
+      var textAttr = this.options.labelTextStyles;
+      for(var state in otherStates) {
+	      // attributes for styling the text
+	      stateAttr = {};
+	      if(this.options.stateSpecificLabelTextStyles[state]) {
+	    	  $.extend(stateAttr, textAttr, this.options.stateSpecificLabelTextStyles[state]);
+	      } else {
+	    	  $.extend(stateAttr, textAttr);
+	      }
+	      // adjust font-size
+	      if(stateAttr['font-size']) {
+	    	  stateAttr['font-size'] = (parseInt(stateAttr['font-size'])/this.scale) + 'px';
+	      }
+
+	      this.labelTexts[state] = R.text( otherStates[state].x, otherStates[state].y, state).attr( stateAttr );
+	      this.labelHitAreas[state] = R.rect(otherStates[state].x-this.options.labelWidth/this.scale/2, otherStates[state].y-this.options.labelHeight/this.scale/2, this.options.labelWidth/this.scale, this.options.labelHeight/this.scale, this.options.labelRadius/this.scale).attr({
+	          fill: "#000",
+	          "stroke-width": 0, 
+	          "opacity" : 0.0, 
+	          'cursor': 'pointer'
+	        });
+	      this.labelHitAreas[state].node.dataState = state;
+      }
       
       // Bind events
       for(var state in this.labelHitAreas) {
