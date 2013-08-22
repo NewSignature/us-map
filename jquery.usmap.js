@@ -149,7 +149,7 @@
     _init: function(options) {
       // Save the options
       this.options = {};
-      $.extend(this.options, defaults, options);
+      $.extend(true, this.options, defaults, options);
       
       // Save the width and height;
       var width = this.element.width();
