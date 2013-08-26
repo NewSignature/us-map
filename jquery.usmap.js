@@ -611,7 +611,7 @@
             {
               stateShape = this.stateShapes[abbreviation];
               for(style in this.options[property])
-                this.paper.getById(stateShape.id).attr(style,this.options[property][style]);
+                stateShape.attr(style,this.options[property][style]);
             }
             break;
           case "stateSpecificStyles":
@@ -619,7 +619,7 @@
             {
               stateShape = this.stateShapes[abbreviation];
               for(style in this.options[property][abbreviation])
-                this.paper.getById(stateShape.id).attr(style,this.options[property][abbreviation][style]);
+                stateShape.attr(style,this.options[property][abbreviation][style]);
             }
             break;
         }
