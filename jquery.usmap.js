@@ -152,7 +152,7 @@
     _init: function(options) {
       // Save the options
       this.options = {};
-      $.extend(this.options, defaults, options);
+      $.extend(true, this.options, defaults, options);
       
       // Save the width and height;
       var width = this.element.width();
@@ -172,6 +172,11 @@
       this.paper.setSize(width, height);
       this.paper.setViewBox(0, 0, paperWidthWithLabels, HEIGHT, false);
       
+      // Adjust the label font size
+      if(this.options.labelTextStyles['font-size']) {
+        this.options.labelTextStyles['font-size'] = this._scaleFontSize( this.options.labelTextStyles['font-size'] );
+      }
+
       // Keep track of all the states
       this.stateHitAreas = {}; // transparent for the hit area
       this.stateShapes = {}; // for the visual shape
@@ -192,6 +197,13 @@
       // Add the 
     },
     
+    _scaleFontSize: function( font_size ) {
+      if(font_size) {
+         font_size = (parseInt(font_size)/this.scale) + 'px';
+        }
+      return(font_size);
+    },
+        
     /**
      * Create the state objects
      */
@@ -404,15 +416,15 @@
         
         // attributes for styling the text
         stateAttr = {};
-        if(this.options.stateSpecificLabelTextStyles[state]) {
-          $.extend(stateAttr, textAttr, this.options.stateSpecificLabelTextStyles[state]);
+        spec_styles = this.options.stateSpecificLabelTextStyles[state];
+        if(spec_styles) {
+          // Adjust this option's font-size
+          if (spec_styles['font-size']) {
+            spec_styles['font-size'] = this._scaleFontSize( spec_styles['font-size'] );
+          }
+          $.extend(stateAttr, textAttr, spec_styles);
         } else {
           $.extend(stateAttr, textAttr);
-        }
-        
-        // adjust font-size
-        if(stateAttr['font-size']) {
-          stateAttr['font-size'] = (parseInt(stateAttr['font-size'])/this.scale) + 'px';
         }
         
         // add the text
@@ -508,6 +520,14 @@
         
         stateData.labelBacking.animate(attrs, this.options.stateHoverAnimation);
       }
+
+      if(stateData.labelText) {
+        var attrs = {};
+        
+        $.extend(attrs, this.options.labelTextStyles, this.options.stateSpecificLabelTextStyles[stateData.name] );
+        
+        stateData.labelText.animate(attrs, this.options.stateHoverAnimation);
+      }
     },
     
     
@@ -572,6 +592,14 @@
         }
         
         stateData.labelBacking.animate(attrs, this.options.stateHoverAnimation);
+      }
+
+      if(stateData.labelText) {
+        var attrs = {};
+        
+        $.extend( attrs, this.options.labelTextHoverStyles, this.options.stateSpecificLabelTextHoverStyles[stateData.name] );
+        
+        stateData.labelText.animate(attrs, this.options.stateHoverAnimation);
       }
     },
     
