@@ -73,6 +73,34 @@
 	  $('#out-md').click(function(event){
 	    $('#map').usmap('trigger', 'MD', 'mouseout', event);
 	  });
+
+      $('#us-map-terr').usmap({
+	    'stateStyles': {
+		    fill: '#eef3fc',
+		    stroke: '#336699'
+	    },
+	    'stateHoverAnimation': false,
+	    'stateHoverStyles': {
+		    fill: '#336699',
+		    stroke: '#336699'
+	    },
+	    'labelBackingStyles': {
+		    fill: '#eef3fc',
+		    stroke: '#336699'
+	    },
+	    'labelTextStyles': {
+		    fill: '#336699'
+	    },
+	    'labelTextHoverStyles': {
+		    fill: '#ffffff'
+	    },
+	    'labelBackingHoverStyles': {
+		    fill: '#336699'
+	    },
+        'includeTerritories': [ 'PR', 'VI' ],
+	    'click' : function(event, data) {
+	    }
+      });
 	});
 	</script>
 </head>
@@ -83,5 +111,8 @@
   
   <button id="over-md">mouseover MD</button> <button id="out-md">mouseout MD</button>
   <div id="map2" style="width: 300px; height: 300px;"></div>
+
+  <h3>Map including Puerto Rico and U.S. Virgin Islands</h3>
+  <div id="us-map-terr" style="width: 700px; height: 500px;"></div>
 </body>
 </html>
