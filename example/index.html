@@ -16,9 +16,9 @@
 	
 	<script src="../lib/raphael.js"></script>
 	<!-- <script src="scale.raphael.js"></script> -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+	<script src="jquery-3.5.1.min.js"></script>
 	<script src="color.jquery.js"></script>
-	<script src="../jquery.usmap.js"></script>
+	<script src="../jquery.usmap.min.js"></script>
 	
 	<script>
 	$(document).ready(function() {
@@ -28,6 +28,9 @@
 	    },
 	    'stateSpecificHoverStyles': {
 	      'HI' : {fill: '#ff0'}
+	    },
+	    'stateSpecificLabelTextStyles': {
+		    'HI' : { fill: '#333333' }
 	    },
 	    
 	    'mouseoverState': {
@@ -42,7 +45,7 @@
 	        .text('Click '+data.name+' on map 1')
 	        .stop()
 	        .css('backgroundColor', '#ff0')
-	        .animate({backgroundColor: '#ddd'}, 1000);
+	        .animate({backgroundColor: '#ddd'}, 500);
 	    }
 	  });
 	  
@@ -51,6 +54,9 @@
 	      fill: '#025', 
 	      "stroke-width": 1,
 	      'stroke' : '#036'
+	    },
+	    'stateSpecificLabelTextStyles': {
+		    'HI' : { fill: '#025' }
 	    },
 	    'stateHoverStyles': {
 	      fill: 'teal'
@@ -61,7 +67,7 @@
 	        .text('Click '+data.name+' on map 2')
 	        .stop()
 	        .css('backgroundColor', '#af0')
-	        .animate({backgroundColor: '#ddd'}, 1000);
+	        .animate({backgroundColor: '#ddd'}, 500);
 	    }
 	  });
 	  

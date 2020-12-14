@@ -139,8 +139,8 @@
     'stateSpecificLabelTextHoverStyles': {},
 
 	'includeTerritories' : [],
-    'terrBoxX' : 690,
-    'terrBoxY' : 500
+    'terrBoxX' : 702,
+    'terrBoxY' : 510
   };
   
   
@@ -343,10 +343,61 @@
 
       // NE States
       var neStates = ['NH', 'VT', 'MA', 'CT', 'RI', 'NJ', 'DE', 'MD', 'DC'];
-      var neBoxX = 860;
-      var neBoxY = 220;
+      var neBoxX = 870;
+      var neBoxY = 227;
 
+      // Other States
+      var otherStates = {
+            HI: {x:295, y:560},
+            AK: {x:120, y:495},
+            CA: {x: 70, y:280},
+            NV: {x:130, y:235},
+            OR: {x: 90, y:125},
+            WA: {x:115, y:50},
+            ID: {x:185, y:145},
+            MT: {x:270, y:85},
+            WY: {x:295, y:185},
+            UT: {x:215, y:255},
+            AZ: {x:195, y:365},
+            CO: {x:310, y:270},
+            NM: {x:295, y:370},
+            TX: {x:420, y:455},
+            OK: {x:455, y:360},
+            KS: {x:440, y:290},
+            NE: {x:420, y:225},
+            SD: {x:410, y:160},
+            ND: {x:415, y:95},
+            MN: {x:500, y:125},
+            IA: {x:520, y:215},
+            WI: {x:578, y:160},
+            IL: {x:593, y:255},
+            MO: {x:540, y:294},
+            AR: {x:540, y:375},
+            LA: {x:544, y:455},
+            MS: {x:596, y:420},
+            AL: {x:648, y:410},
+            TN: {x:645, y:346},
+            KY: {x:680, y:304},
+            IN: {x:645, y:250},
+            MI: {x:665, y:185},
+            OH: {x:696, y:240},
+            PA: {x:775, y:215},
+            NY: {x:810, y:160},
+            ME: {x:895, y:85},
+            WV: {x:735, y:278},
+            VA: {x:785, y:285},
+            NC: {x:778, y:334},
+            SC: {x:758, y:376},
+            GA: {x:710, y:410},
+            FL: {x:763, y:508}
+      };
+ 
       var i, x, y, state, terr;
+
+      var textAttr = this.options.labelTextStyles;
+      for(var state in otherStates) {
+        this._initCreateStateLabel( state, otherStates[state].x, otherStates[state].y, false );
+      }
 
       for(i=0; i<neStates.length; ++i) {
         state = neStates[i];
@@ -355,7 +406,7 @@
         x = ((i+1)%2) * colWidth + neBoxX;
         y = i*downBy + neBoxY;
 
-        this._initCreateStateLabel( state, x, y );
+        this._initCreateStateLabel( state, x, y, true );
       }
 
       // Displayed Territories - Move the boxes down if not all are displayed
@@ -373,7 +424,7 @@
         x = terrBoxX;
         y = (i*2)*downBy + terrBoxY;
 
-        this._initCreateStateLabel( terr, x, y );
+        this._initCreateStateLabel( terr, x, y, true );
       }
 
       // Bind events
@@ -388,7 +439,7 @@
     /**
      * Create the labels
      */
-    _initCreateStateLabel: function( state, x, y ) {
+    _initCreateStateLabel: function( state, x, y, rect ) {
       var R = this.paper; // shorter name for usage here
       
       // calculate the values for placing items
@@ -415,7 +466,9 @@
         }
         
         // add the backing
-        this.labelShapes[state] = R.rect(x, y, shapeWidth, shapeHeight, shapeRadius).attr(stateAttr);
+        if (rect) {
+          this.labelShapes[state] = R.rect(x - shapeWidth/2, y - shapeHeight/2, shapeWidth, shapeHeight, shapeRadius).attr(stateAttr);
+         }
         
         // attributes for styling the text
         stateAttr = {};
@@ -431,11 +484,11 @@
         }
         
         // add the text
-        this.labelTexts[state] = R.text(x+(shapeWidth/2), y+(shapeHeight/2), state).attr(stateAttr);
+        this.labelTexts[state] = R.text(x, y, state).attr(stateAttr);
         
         // Create the hit areas
-        this.labelHitAreas[state] = R.rect(x, y, shapeWidth, shapeHeight, shapeRadius).attr({
-          fill: "#000",
+        this.labelHitAreas[state] = R.rect(x - shapeWidth/2, y - shapeHeight/2, shapeWidth, shapeHeight, shapeRadius).attr({
+          fill: "#000000",
           "stroke-width": 0, 
           "opacity" : 0.0, 
           'cursor': 'pointer'
